@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   }
 }
 
-async export default function postMethod(req, res) {
+export default async function postMethod(req, res) {
   let client = await MongoClient.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
