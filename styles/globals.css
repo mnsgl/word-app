@@ -1,5 +1,7 @@
 html,
 body {
+  width: 100%;
+  height: 100vh;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -13,4 +15,94 @@ a {
 
 * {
   box-sizing: border-box;
+  background-color: whitesmoke;
+}
+
+.items::-webkit-scrollbar {
+  display: none;
+}
+
+.head svg, svg>* {
+  transition: all .2s ease;
+  cursor: pointer;
+}
+
+.head svg {
+  box-shadow: 0px 5px 15px -5px rgba(0, 0, 0, 0.35);
+}
+
+.head svg:hover {
+  box-shadow: 0px 5px 20px -4px rgba(0, 0, 0, 0.45);
+}
+
+.head svg path {
+  fill: gray;
+}
+
+.head svg:hover path {
+  fill: black;
+}
+.delete svg {
+  width: 26px;
+  height: 26px;
+  box-shadow: 0px 1px 12px -3px rgba(0, 0, 0, 0.00);
+  transition: all .3s ease;
+}
+
+.delete svg, svg>* {
+  transition: all .2s ease;
+  cursor: pointer;
+}
+
+.delete svg:hover  {
+  box-shadow: 0px 1px 12px -3px rgba(0, 0, 0, 0.45);
+}
+
+.delete svg path {
+  fill: gray;
+}
+
+.delete svg:hover path {
+  fill: black;
+}
+
+.back svg {
+  transition: all .2s ease-in-out;
+}
+
+@media (max-width: 639px) {
+  .delete svg {
+    width: 23px;
+    height:23px;
+  }
+  .delete svg:hover  {
+    box-shadow: none;
+  }
+  .head svg {
+    width: 40px;
+    height:40px;
+  }
+  .back svg:hover {
+    height: unset;
+    width: unset;
+  }
+}
+
+.word-item-set svg path {
+  fill: rgba(0, 0, 0, 0.35);
+}
+
+#word-item-set-add path {
+  fill: rgba(0, 254, 0, .8);
+}
+
+#word-item-set-del path {
+  fill: rgba(254, 0, 0, .8);
+}
+#word-item-dis-edit path {
+  fill: rgba(254, 0, 254, .8);
+}
+
+#word-item-dis-del path {
+  fill: rgba(254, 0, 0, .8);
 }
