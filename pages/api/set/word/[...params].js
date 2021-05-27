@@ -17,7 +17,10 @@ export default async function handler(req, res) {
 }
 
 async function getMethod(req, res, userName, setName) {
-  let client = await MongoClient.connect(url);
+  let client = await MongoClient.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
   let db = client.db();
 
   let user = await db.collection("users").find({ name: userName }).toArray();

@@ -2,8 +2,8 @@ import { MongoClient } from "mongodb";
 
 export default async function handler(req, res) {
   let ret = null;
-  if (req.method === "PATCH") {
-    ret = await patchMethod(req, res);
+  if (req.method === "DELETE") {
+    ret = await deleteMethod(req, res);
   } else {
     ret = res.status(400).json({ message: "Wrong api call" });
   }
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   return ret;
 }
 
-async function patchMethod(req, res) {
+async function deleteMethod(req, res) {
   if (!req?.body) {
     return res.status(400).json({ msg: "body is empty" });
   }
@@ -19,8 +19,8 @@ async function patchMethod(req, res) {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-
   let db = client.db();
+
   let aggregate = await db
     .collection("users")
     .aggregate([
@@ -45,22 +45,16 @@ async function patchMethod(req, res) {
     }
   });
 
-  console.log(req.body);
-  db.collection("sets").updateOne(
-    { _id: setId, "words._id": req.body._id },
-    {
-      $set: {
-        "words.$": {
-          word: req.body.word,
-          pro: req.body.pro,
-          tran: req.body.tran,
-          _id: req.body._id,
-          date: new Date().toLocaleString(),
-        },
-      },
-    }
-  );
-  return res.status(201).json({ msg: "word added" });
+  db.collection("sets")
+    .updateOne(
+      { _id: setId },
+      {
+        $pull: { words: { _id: parseInt(req.body.wordId) } },
+      }
+    )
+    .then((_) => client.close());
+
+  return res.status(201).json({ msg: "word was successfuly removed" });
 }
 let url =
   "mongodb+srv://pyloo:Salamander.123@cluster0.t25mg.mongodb.net/WordApp?retryWrites=true&w=majority";

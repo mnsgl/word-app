@@ -16,9 +16,12 @@ function Sets() {
 
   async function checkAndCreate(e) {
     let userName = localStorage.getItem("userName");
-    const response = await fetch(`/api/set/word/${userName}/${projectName}`);
-    const res = await response.json();
-    if (res.length !== 0) {
+    let nameIsValid = sets.find((set) => set.setName === projectName);
+    const set = {
+      userName,
+      setName: projectName,
+    };
+    if (nameIsValid) {
       setErr(true);
     } else {
       setIsModalOpen(false);
@@ -28,8 +31,14 @@ function Sets() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userName, setName: projectName }),
-      });
+        body: JSON.stringify(set),
+      })
+        .then((res) => res.json())
+        .then((info) => {
+          set._id = info.id;
+          set.date = new Date().toLocaleString();
+          setSets((prev) => [...prev, set]);
+        });
     }
   }
 
@@ -50,7 +59,7 @@ function Sets() {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [sets]);
   return (
     <>
       <Head>

@@ -41,7 +41,7 @@ async function postMethod(req, res) {
       .updateOne({ name: req.body.userName }, { $push: { setsId: id } })
       .then((_) => client.close());
   });
-  return res.status(201).json({ msg: "set created" });
+  return res.status(201).json({ msg: "set created", id });
 }
 let url =
   "mongodb+srv://pyloo:Salamander.123@cluster0.t25mg.mongodb.net/WordApp?retryWrites=true&w=majority";

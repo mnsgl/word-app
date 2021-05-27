@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 
-async export default function handler(req, res) {
+export default async function handler(req, res) {
   let ret = null
   if(req.method === "POST") {
     ret = await postMethod(req, res)
@@ -10,7 +10,10 @@ async export default function handler(req, res) {
 }
 
 async export default function postMethod(req, res) {
-  let client = await MongoClient.connect(url);
+  let client = await MongoClient.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
   let db = client.db();
   let user = await db.collection("users").find({ name: userName }).toArray();
   let setsId = user[0].setsId;

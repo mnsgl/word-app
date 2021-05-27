@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { MdAdd, MdDelete } from "react-icons/md";
+import { SetsContext } from "../../context/setcontext/SetProvider";
 export default function EditWordItem({ data, setEdit, setData }) {
+  const [, setSets] = useContext(SetsContext);
   const router = useRouter();
   const [word, setWord] = useState("");
   const [pro, setPro] = useState("");
@@ -24,20 +26,35 @@ export default function EditWordItem({ data, setEdit, setData }) {
       newData = { _id: data._id, word, pro, tran };
       return [...curData, newData];
     });
-    /*
     fetch("/api/set/word/update-word/", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...newData, setName: router.query.set_name, userName  }),
+      body: JSON.stringify({
+        ...newData,
+        setName: router.query.set_name,
+        userName,
+      }),
     });
-    */
     setEdit((p) => !p);
   }
   async function delItem(e) {
+    let userName = localStorage.getItem("userName");
     await setData((prev) => prev.filter((item) => item._id !== data._id));
+    fetch("/api/set/word/delete-word/", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userName,
+        setName: router.query.set_name,
+        wordId: data._id,
+      }),
+    });
     setEdit((p) => !p);
+    setSets([]);
   }
 
   return (

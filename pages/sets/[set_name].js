@@ -8,31 +8,23 @@ import Loading from "../../components/Loading";
 export default function Set() {
   let router = useRouter();
   const [add, setAdd] = useState(false);
-  //const [newItem, setNewItem] = useState({});
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
-  /*
-  useEffect(() => {
-    if (newItem?.word) {
-      setData([...data, newItem]);
-      setNewItem({});
-    }
-  }, [newItem]);
-  */
-
   useEffect(async () => {
-    await fetch(
-      `/api/set/word/${localStorage.getItem("userName")}/${
-        router.query.set_name
-      }`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      });
-  }, []);
+    if (router.query.set_name) {
+      await fetch(
+        `/api/set/word/${localStorage.getItem("userName")}/${
+          router.query.set_name
+        }`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setData(data);
+          setLoading(false);
+        });
+    }
+  }, [router.query.set_name]);
   return (
     <>
       <Head>
@@ -50,11 +42,6 @@ export default function Set() {
                     onClick={() => router.back()}
                     size="2.3em"
                     className="arr cursor-pointer tablet:w-11 tablet:h-11 mobile:w-8 mobile:h-8"
-                  />
-                  <MdSave
-                    fill="rgba(0, 0, 0, .4)"
-                    size="2.3em"
-                    className="cursor-pointer hover:fill-current hover:text-blue-600 tablet:w-11 tablet:h-11 mobile:w-8 mobile:h-8"
                   />
                 </div>
                 <div>

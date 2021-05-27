@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { MdAdd, MdDelete } from "react-icons/md";
+import { SetsContext } from "../../context/setcontext/SetProvider";
 export default function AddWordItem({ setAdd, data, setData }) {
   const router = useRouter();
   const [word, setWord] = useState("");
   const [pro, setPro] = useState("");
   const [tran, setTran] = useState("");
+  const [, setSets] = useContext(SetsContext);
 
   async function add(e) {
     if (word.length <= 1 && trans.length <= 1) {
@@ -22,6 +24,7 @@ export default function AddWordItem({ setAdd, data, setData }) {
       body: JSON.stringify({ word, pro, tran, setName: router.query.set_name }),
     });
     setAdd(false);
+    setSets([]);
   }
 
   return (
