@@ -19,7 +19,7 @@ export default function EditWordItem({ data, setEdit, setData }) {
       return;
     }
     let newData = null;
-    let userName = localStorage.getItem("userName");
+    let userName = sessionStorage.getItem("userName");
 
     await setData((prev) => {
       let curData = prev.filter((item) => item._id !== data._id);
@@ -40,7 +40,7 @@ export default function EditWordItem({ data, setEdit, setData }) {
     setEdit((p) => !p);
   }
   async function delItem(e) {
-    let userName = localStorage.getItem("userName");
+    let userName = sessionStorage.getItem("userName");
     await setData((prev) => prev.filter((item) => item._id !== data._id));
     fetch("/api/set/word/delete-word/", {
       method: "DELETE",
@@ -65,7 +65,7 @@ export default function EditWordItem({ data, setEdit, setData }) {
           type="text"
           placeholder="Word"
           onChange={(e) => setWord(e.target.value)}
-          className={`outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 mobile:text-base mobile:w-64 focus:border-yellow-500 transition ease-in-out duration-200 laptop:w-36 laptop:text-sm tablet:w-24 tablet:text-xs`}
+          className="outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 focus:border-yellow-500 transition ease-in-out duration-200"
         />
 
         <input
@@ -73,7 +73,7 @@ export default function EditWordItem({ data, setEdit, setData }) {
           type="text"
           placeholder="Pronunciation"
           onChange={(e) => setPro(e.target.value)}
-          className="outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 mobile:text-base mobile:w-64 focus:border-yellow-500 transition ease-in-out duration-200 laptop:w-36 laptop:text-sm tablet:w-24 tablet:text-xs"
+          className="outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 focus:border-yellow-500 transition ease-in-out duration-200"
         />
 
         <input
@@ -81,21 +81,21 @@ export default function EditWordItem({ data, setEdit, setData }) {
           type="text"
           placeholder="Translation"
           onChange={(e) => setTran(e.target.value)}
-          className="outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 mobile:text-base mobile:w-64 focus:border-yellow-500 transition ease-in-out duration-200 laptop:w-36 laptop:text-sm tablet:w-24 tablet:text-xs"
+          className="outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 focus:border-yellow-500 transition ease-in-out duration-200"
         />
 
-        <div className="word-item-set flex gap-3 mobile:gap-10 mobile:mb-3 mobile:mt-3">
+        <div className="word-item-set flex gap-3">
           <MdAdd
             onClick={edit}
             id="word-item-set-add"
             size="28px"
-            className="cursor-pointer laptop:w-7 tablet:w-5 mobile:w-4"
+            className="cursor-pointer"
           />
           <MdDelete
             onClick={delItem}
             id="word-item-set-del"
             size="24px"
-            className="cursor-pointer laptop:w-7 tablet:w-5 mobile:w-4"
+            className="cursor-pointer"
           />
         </div>
       </div>

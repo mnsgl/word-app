@@ -6,16 +6,21 @@ import Loading from "../../components/Loading";
 import { SetsContext } from "../../context/setcontext/SetProvider";
 import Modal from "react-modal";
 import { useRouter } from "next/router";
+import LogOut from "../../components/LogOut";
+import { ThemeContext } from "../../context/themeContext/ThemeProvider";
+import Theme from "../../components/Theme";
 
 function Sets() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sets, setSets] = useContext(SetsContext);
+  const [theme, setTheme] = useContext(ThemeContext);
   const [projectName, setProjectName] = useState("");
   const [err, setErr] = useState(false);
+  const router = useRouter();
 
   async function checkAndCreate(e) {
-    let userName = localStorage.getItem("userName");
+    let userName = sessionStorage.getItem("userName");
     let nameIsValid = sets.find((set) => set.setName === projectName);
     const set = {
       userName,
@@ -50,7 +55,7 @@ function Sets() {
   useEffect(async () => {
     Modal.setAppElement("#__next");
     if (sets.length === 0) {
-      fetch("/api/set/" + localStorage.getItem("userName"))
+      fetch("/api/set/" + sessionStorage.getItem("userName"))
         .then((res) => res.json())
         .then((data) => {
           setSets(data);
@@ -60,13 +65,33 @@ function Sets() {
       setLoading(false);
     }
   }, [sets]);
+  if (typeof window !== "undefined" && !sessionStorage.getItem("userName")) {
+    router.push("/user/signin");
+  }
+  useEffect(() => {
+    if (theme === "dark") {
+      document.getElementById("__next").style.backgroundColor = "#151515";
+    } else {
+      document.getElementById("__next").style.backgroundColor = "#F5F5F5";
+    }
+  }, [theme]);
   return (
     <>
       <Head>
         <title>Sets</title>
       </Head>
-      <div className="container h-screen w-full mx-auto box-content">
-        <div className="w-4/5 mx-auto h-full flex flex-col">
+      <div
+        className={`container h-screen w-full mx-auto box-content ${
+          theme === "dark" && "bg-dark"
+        }`}
+      >
+        <LogOut />
+        <Theme />
+        <div
+          className={`w-3/5 mx-auto h-full flex flex-col ${
+            theme === "dark" && "bg-dark"
+          }`}
+        >
           <Modal
             onAfterClose={modalClosed}
             className="flex flex-col gap-3 items-center outline-none absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-56 border-2 border-gray-400 rounded-md"
@@ -96,14 +121,22 @@ function Sets() {
             <Loading />
           ) : (
             <>
-              <div className="head flex justify-center items-center w-full h-16 mb-5 mt-5">
+              <div
+                className={`head flex justify-center items-center w-full h-16 mb-5 mt-5 ${
+                  theme === "dark" && "bg-dark"
+                }`}
+              >
                 <MdAdd
                   size="3em"
                   className="cursor-pointer rounded-full"
                   onClick={(_) => setIsModalOpen(true)}
                 />
               </div>
-              <div className="items w-full h-full py-3 mobile:py-1 px-4 overflow-scroll">
+              <div
+                className={`items w-full h-full py-3 px-4 overflow-scroll ${
+                  theme === "dark" && "bg-dark"
+                }`}
+              >
                 {sets.map((item, index) => (
                   <Item key={index} item={item} />
                 ))}

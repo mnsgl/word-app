@@ -17,7 +17,6 @@ async function postMethod(req, res) {
   let db = client.db();
   let user = await db.collection("users").find({ name: userName }).toArray();
   let setsId = user[0].setsId;
-  console.log(setsId);
   return res.status(400).json({ message: "Wrong api call" });
 }
 

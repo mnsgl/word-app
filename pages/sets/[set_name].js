@@ -5,6 +5,7 @@ import WordItem from "../../components/worditem/WordItem";
 import { useEffect, useState } from "react";
 import AddWordItem from "../../components/worditem/AddWordItem";
 import Loading from "../../components/Loading";
+import LogOut from "../../components/LogOut";
 export default function Set() {
   let router = useRouter();
   const [add, setAdd] = useState(false);
@@ -14,7 +15,7 @@ export default function Set() {
   useEffect(async () => {
     if (router.query.set_name) {
       await fetch(
-        `/api/set/word/${localStorage.getItem("userName")}/${
+        `/api/set/word/${sessionStorage.getItem("userName")}/${
           router.query.set_name
         }`
       )
@@ -25,32 +26,36 @@ export default function Set() {
         });
     }
   }, [router.query.set_name]);
+  if (typeof window !== "undefined" && !sessionStorage.getItem("userName")) {
+    router.push("/user/signin");
+  }
   return (
     <>
       <Head>
         <title>Set-{router.query.set_name}</title>
       </Head>
       <div className="container h-screen w-full mx-auto box-content">
-        <div className="w-4/5 mobile:w-3/5 mx-auto h-full flex flex-col">
+        <LogOut />
+        <div className="w-4/5 mx-auto h-full flex flex-col">
           {loading ? (
             <Loading />
           ) : (
             <>
-              <div className="back items-center  w-full h-16 mb-10 mt-5 pl-5 pr-10 mobile:mb-3">
+              <div className="back items-center  w-full h-16 mb-10 mt-5 pl-5 pr-10">
                 <div className="flex justify-between h-10">
                   <MdKeyboardBackspace
                     onClick={() => router.back()}
                     size="2.3em"
-                    className="arr cursor-pointer tablet:w-11 tablet:h-11 mobile:w-8 mobile:h-8"
+                    className="arr cursor-pointer"
                   />
                 </div>
                 <div>
-                  <p className="text-center text-4xl mobile:text-xl tablet:text-2xl laptop:text-3xl">
+                  <p className="text-center text-4xl">
                     {router.query.set_name?.toUpperCase()}
                   </p>
                 </div>
               </div>
-              <div className="items w-full h-full py-3 mobile:px-0 px-4 overflow-scroll">
+              <div className="items w-full h-full py-3 px-4 overflow-scroll">
                 {data
                   .sort((a, b) => a._id - b._id)
                   .map((item, index) => (
@@ -71,7 +76,7 @@ export default function Set() {
                   <MdAdd
                     onClick={() => setAdd(true)}
                     size="3em"
-                    className="cursor-pointer rounded-full laptop:w-10 laptop:h-10 tablet:w-9 tablet:h-9 mobile:w-7 mobile:h-7"
+                    className="cursor-pointer rounded-full"
                   />
                 </div>
               </div>

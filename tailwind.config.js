@@ -16,10 +16,8 @@ module.exports = {
       fontSize: {
         "1.5xl": ["1.4rem", "1.9rem"],
       },
-      screens: {
-        mobile: { max: "639px" },
-        laptop: { min: "768px", max: "1535px" },
-        tablet: { min: "640px", max: "767px" },
+      colors: {
+        dark: "#151515",
       },
     },
   },

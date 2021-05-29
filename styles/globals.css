@@ -42,29 +42,6 @@ a {
 .head svg:hover path {
   fill: black;
 }
-.delete svg {
-  width: 26px;
-  height: 26px;
-  box-shadow: 0px 1px 12px -3px rgba(0, 0, 0, 0.00);
-  transition: all .3s ease;
-}
-
-.delete svg, svg>* {
-  transition: all .2s ease;
-  cursor: pointer;
-}
-
-.delete svg:hover  {
-  box-shadow: 0px 1px 12px -3px rgba(0, 0, 0, 0.45);
-}
-
-.delete svg path {
-  fill: gray;
-}
-
-.delete svg:hover path {
-  fill: black;
-}
 
 .back svg {
   transition: all .2s ease-in-out;

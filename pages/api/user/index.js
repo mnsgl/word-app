@@ -34,6 +34,7 @@ async function postMethod(req, res) {
     _id: id,
     name: req.body.name,
     pass: req.body.pass,
+    mail: req.body.mail,
     date: new Date().toLocaleString(),
     setsId: [],
   };

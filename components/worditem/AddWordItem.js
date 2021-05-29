@@ -28,15 +28,15 @@ export default function AddWordItem({ setAdd, data, setData }) {
   }
 
   return (
-    <div className="item w-full h-18 mb-2 rounded-lg hover:border-opacity-0 cursor-pointer border-2 border-gray-300 shadow hover:shadow-lg transition ease-in-out duration-300 px-5 mobile:px-2 mobile:h-auto select-none mobile:pt-5">
-      <div className="flex justify-between items-center h-full mobile:flex-col mobile:pt-2 mobile:gap-5 ">
+    <div className="item w-full h-18 mb-2 rounded-lg hover:border-opacity-0 cursor-pointer border-2 border-gray-300 shadow hover:shadow-lg transition ease-in-out duration-300 px-5 select-none">
+      <div className="flex justify-between items-center h-full">
         <input
           value={word}
           type="text"
           placeholder="Word"
           onChange={(e) => setWord(e.target.value)}
           className={
-            "outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 mobile:text-base mobile:w-64 focus:border-yellow-500 transition ease-in-out duration-200 laptop:w-36 laptop:text-sm tablet:w-24 tablet:text-xs"
+            "outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 focus:border-yellow-500 transition ease-in-out duration-200"
           }
         />
 
@@ -45,7 +45,7 @@ export default function AddWordItem({ setAdd, data, setData }) {
           type="text"
           placeholder="Pronunciation"
           onChange={(e) => setPro(e.target.value)}
-          className="outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 mobile:text-base mobile:w-64 focus:border-yellow-500 transition ease-in-out duration-200 laptop:w-36 laptop:text-sm tablet:w-24 tablet:text-xs"
+          className="outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 focus:border-yellow-500 transition ease-in-out duration-200"
         />
 
         <input
@@ -53,21 +53,21 @@ export default function AddWordItem({ setAdd, data, setData }) {
           type="text"
           placeholder="Translation"
           onChange={(e) => setTran(e.target.value)}
-          className="outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 mobile:text-base mobile:w-64 focus:border-yellow-500 transition ease-in-out duration-200 laptop:w-36 laptop:text-sm tablet:w-24 tablet:text-xs"
+          className="outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 focus:border-yellow-500 transition ease-in-out duration-200"
         />
 
-        <div className="word-item-set flex gap-3 mobile:gap-10 mobile:mb-3 mobile:mt-3">
+        <div className="word-item-set flex gap-3">
           <MdAdd
             onClick={add}
             id="word-item-set-add"
             size="28px"
-            className="cursor-pointer laptop:w-7 tablet:w-5 mobile:w-4"
+            className="cursor-pointer"
           />
           <MdDelete
             onClick={() => setAdd(false)}
             id="word-item-set-del"
             size="24px"
-            className="cursor-pointer laptop:w-7 tablet:w-5 mobile:w-4"
+            className="cursor-pointer"
           />
         </div>
       </div>
