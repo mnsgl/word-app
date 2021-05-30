@@ -13,8 +13,8 @@ export default function Item({ item }) {
   }
   return (
     <div
-      className={`item w-full h-18 mb-2 rounded-lg hover:border-opacity-0 cursor-pointer border-2 border-gray-300 shadow hover:shadow-lg px-5 ${
-        theme === "dark" && "bg-dark"
+      className={`item w-full h-18 mb-2 rounded-lg cursor-pointer border-2 border-gray-300 shadow hover:shadow-lg px-5 ${
+        theme === "dark" && "bg-dark hover:border-blue-800"
       }`}
     >
       <div

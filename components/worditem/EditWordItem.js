@@ -2,8 +2,10 @@ import { useRouter } from "next/router";
 import { useState, useEffect, useContext } from "react";
 import { MdAdd, MdDelete } from "react-icons/md";
 import { SetsContext } from "../../context/setcontext/SetProvider";
+import { ThemeContext } from "../../context/themeContext/ThemeProvider";
 export default function EditWordItem({ data, setEdit, setData }) {
   const [, setSets] = useContext(SetsContext);
+  const [theme] = useContext(ThemeContext);
   const router = useRouter();
   const [word, setWord] = useState("");
   const [pro, setPro] = useState("");
@@ -58,14 +60,20 @@ export default function EditWordItem({ data, setEdit, setData }) {
   }
 
   return (
-    <div className="item w-full h-18 mb-2 rounded-lg hover:border-opacity-0 cursor-pointer border-2 border-gray-300 shadow hover:shadow-lg transition ease-in-out duration-300 px-5 mobile:px-2 mobile:h-auto select-none mobile:pt-5">
-      <div className="flex justify-between items-center h-full mobile:flex-col mobile:pt-2 mobile:gap-5 ">
+    <div
+      className={`item w-full h-18 mb-2 rounded-md cursor-pointer border-2 border-gray-300 shadow hover:shadow-lg px-5 mobile:px-2 mobile:h-auto select-none mobile:pt-5 ${
+        theme === "dark" && "bg-dark hover:border-blue-600"
+      }`}
+    >
+      <div className="flex justify-between items-center h-full mobile:flex-col mobile:pt-2 mobile:gap-5 bg-transparent">
         <input
           value={word}
           type="text"
           placeholder="Word"
           onChange={(e) => setWord(e.target.value)}
-          className="outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 focus:border-yellow-500 transition ease-in-out duration-200"
+          className={`outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 focus:border-yellow-500 transition ease-in-out duration-200 bg-transparent ${
+            theme === "dark" && "text-gray-100 border-blue-600"
+          }`}
         />
 
         <input
@@ -73,7 +81,9 @@ export default function EditWordItem({ data, setEdit, setData }) {
           type="text"
           placeholder="Pronunciation"
           onChange={(e) => setPro(e.target.value)}
-          className="outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 focus:border-yellow-500 transition ease-in-out duration-200"
+          className={`outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 focus:border-yellow-500 transition ease-in-out duration-200 bg-transparent ${
+            theme === "dark" && "text-gray-100 border-blue-600"
+          }`}
         />
 
         <input
@@ -81,21 +91,23 @@ export default function EditWordItem({ data, setEdit, setData }) {
           type="text"
           placeholder="Translation"
           onChange={(e) => setTran(e.target.value)}
-          className="outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 focus:border-yellow-500 transition ease-in-out duration-200"
+          className={`outline-none border-b-2 border-gray-500 px-2 pt-1 text-xl break-all w-72 focus:border-yellow-500 transition ease-in-out duration-200 bg-transparent ${
+            theme === "dark" && "text-gray-100 border-blue-600"
+          }`}
         />
 
-        <div className="word-item-set flex gap-3">
+        <div className="word-item-set flex gap-3 bg-transparent">
           <MdAdd
             onClick={edit}
             id="word-item-set-add"
             size="28px"
-            className="cursor-pointer"
+            className="cursor-pointer bg-transparent"
           />
           <MdDelete
             onClick={delItem}
             id="word-item-set-del"
             size="24px"
-            className="cursor-pointer"
+            className="cursor-pointer bg-transparent"
           />
         </div>
       </div>

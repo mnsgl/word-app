@@ -53,6 +53,9 @@ function Sets() {
   }
 
   useEffect(async () => {
+    if (typeof window !== "undefined" && !sessionStorage.getItem("userName")) {
+      router.push("/user/signin");
+    }
     Modal.setAppElement("#__next");
     if (sets.length === 0) {
       fetch("/api/set/" + sessionStorage.getItem("userName"))
@@ -65,16 +68,6 @@ function Sets() {
       setLoading(false);
     }
   }, [sets]);
-  if (typeof window !== "undefined" && !sessionStorage.getItem("userName")) {
-    router.push("/user/signin");
-  }
-  useEffect(() => {
-    if (theme === "dark") {
-      document.getElementById("__next").style.backgroundColor = "#151515";
-    } else {
-      document.getElementById("__next").style.backgroundColor = "#F5F5F5";
-    }
-  }, [theme]);
   return (
     <>
       <Head>

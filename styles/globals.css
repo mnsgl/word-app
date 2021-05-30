@@ -43,10 +43,6 @@ a {
   fill: black;
 }
 
-.back svg {
-  transition: all .2s ease-in-out;
-}
-
 @media (max-width: 639px) {
   .delete svg {
     width: 23px;
