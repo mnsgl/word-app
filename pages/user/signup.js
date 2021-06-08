@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Loading from "../../components/Loading";
 import Theme from "../../components/Theme";
 import { ThemeContext } from "../../context/themeContext/ThemeProvider";
+import Link from "next/link";
 export default function SignUp() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -16,9 +17,8 @@ export default function SignUp() {
   async function check(e) {
     e.preventDefault();
     setErrs({});
-    let errs = useCheck(name, mail, pass);
+    let errs = useCheck(name, pass, mail);
     setErrs(errs);
-
     if (!Object.keys(errs).length) {
       const respons = await fetch("/api/user/", {
         method: "POST",
@@ -138,6 +138,11 @@ export default function SignUp() {
               >
                 Sign Up
               </button>
+              <Link href="/user/signin">
+                <p className="text-center mt-3 hover:underline cursor-pointer text-purple-700 bg-transparent">
+                  Do you have an account?
+                </p>
+              </Link>
             </form>
           )}
         </div>

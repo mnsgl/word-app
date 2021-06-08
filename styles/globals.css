@@ -79,3 +79,26 @@ a {
 #word-item-dis-del path {
   fill: rgba(254, 0, 0, .8);
 }
+
+
+.item {
+  animation: 300ms item forwards;
+}
+.item:hover {
+  animation: 300ms item-hover forwards;
+}
+
+@keyframes item-hover {
+  to {
+    border-color: rgba(30, 64, 175, .6);
+  }
+}
+
+@keyframes item {
+  from {
+    border-color: rgba(30, 64, 175, .6);
+  }
+  to {
+    border-color: rgba(255, 251, 235, .6);
+  }
+}

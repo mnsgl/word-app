@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Loading from "../../components/Loading";
 import { ThemeContext } from "../../context/themeContext/ThemeProvider";
 import Theme from "../../components/Theme";
+import Link from "next/link";
 export default function SignIn() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -19,14 +20,12 @@ export default function SignIn() {
 
     if (!Object.keys(errs).length) {
       const response = await fetch("/api/user/" + name);
-      console.log("gonderdi");
       const res = await response.json();
       if (response.status === 400) {
         setErrs({ pass: res.message });
       }
       if (response.status === 200) {
         sessionStorage.setItem("userName", res.name);
-        console.log("pushlandi");
         router.push("/sets");
         return;
       }
@@ -113,6 +112,11 @@ export default function SignIn() {
               >
                 Sign In
               </button>
+              <Link href="/user/signup">
+                <p className="text-center mt-3 hover:underline cursor-pointer text-purple-700 bg-transparent">
+                  Create an account
+                </p>
+              </Link>
             </form>
           )}
         </div>

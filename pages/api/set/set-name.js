@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
 
 export default async function handler(req, res) {
   let ret = null;
@@ -9,16 +10,23 @@ export default async function handler(req, res) {
   }
 }
 
+// http://localhost:3000/api/set/set-name
+// post method to get all set ids of user
+//  body {
+//      set : {
+//        setName,
+//      }
+//      user: {
+//        name,
+//      }
+//  }
+
 async function postMethod(req, res) {
-  let client = await MongoClient.connect(url, {
+  await mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  let db = client.db();
   let user = await db.collection("users").find({ name: userName }).toArray();
   let setsId = user[0].setsId;
   return res.status(400).json({ message: "Wrong api call" });
 }
-
-let url =
-  "mongodb+srv://pyloo:Salamander.123@cluster0.t25mg.mongodb.net/WordApp?retryWrites=true&w=majority";

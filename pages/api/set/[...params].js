@@ -1,4 +1,8 @@
 import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
+import User from "../models/user";
+import Set from "../models/set";
+
 export default async function handler(req, res) {
   let ret = null;
   let params = req.query.params;
@@ -9,51 +13,59 @@ export default async function handler(req, res) {
   }
   if (params.length === 1 && req.method === "GET") {
     let userName = params[0];
-    ret = await getMethod(req, res, userName);
+    ret = await getMethod(res, userName);
   } else if (params.length === 2 && req.method === "DELETE") {
     let userName = params[0];
     let setId = params[1];
-    ret = await deleteMethod(req, res, userName, setId);
+    ret = await deleteMethod(res, userName, setId);
   } else {
     ret = res.status(400).json({ message: "Wrong api call" });
   }
   return ret;
 }
 
-async function getMethod(req, res, userName) {
-  let client = await MongoClient.connect(url, {
+// http://localhost:3000/api/set/[userName]
+// get method to get set by user name
+
+async function getMethod(res, userName) {
+  await mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  let db = client.db();
-
-  let user = await db.collection("users").find({ name: userName }).toArray();
-  let setsId = user[0].setsId;
-  let sets = await db
-    .collection("sets")
-    .find({ _id: { $in: setsId } })
-    .toArray();
-  client.close();
-  if (sets.length > 0) {
-    return res.status(200).json(sets);
-  } else {
-    return res.status(400).json({ message: "set is not exist" });
-  }
+  User.findOne({ name: userName })
+    .populate("setIds")
+    .then((user) => {
+      return res.status(200).json(user.setIds);
+    });
+  /*
+  User.findOne({ name: userName }).then(async (user) => {
+    let sets = await Set.find({ _id: user.setIds });
+    if (sets.length > 0) {
+      return res.status(200).json(sets);
+    } else {
+      return res.status(400).json({ message: "set not exist" });
+    }
+  });
+  */
 }
 
-async function deleteMethod(req, res, userName, setId) {
-  let client = await MongoClient.connect(url);
-  let db = client.db();
+// http://localhost:3000/api/set/[userName]/[setId]
+// delete method to delete a set by user name and set id
 
-  db.collection("users").updateOne(
+async function deleteMethod(res, userName, setId) {
+  await mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  User.updateOne(
     { name: userName },
-    { $pull: { setsId: parseInt(setId) } }
-  );
-  db.collection("sets")
-    .deleteOne({ _id: parseInt(setId) })
-    .then((_) => client.close);
-  return res.status(201).json({ message: "set has been deleted" });
+    { $pull: { setIds: mongoose.Types.ObjectId(setId) } }
+  )
+    .then(async (_) => {
+      await Set.deleteOne({ _id: mongoose.Types.ObjectId(setId) });
+      return res.status(201).json({ message: "set has been deleted" });
+    })
+    .catch((err) => {
+      return res.status(400).json({ error: err });
+    });
 }
-
-let url =
-  "mongodb+srv://pyloo:Salamander.123@cluster0.t25mg.mongodb.net/WordApp?retryWrites=true&w=majority";

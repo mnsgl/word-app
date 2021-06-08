@@ -1,31 +1,32 @@
 import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
+import User from "../models/user";
 export default async function handler(req, res) {
   let ret = null;
-  if (req.query.params.length > 1) {
-    return res
+  if (req.method === "GET" && req.query.params.length === 1) {
+    let userName = req.query.params[0];
+    ret = await getMethod(res, userName);
+  } else {
+    ret = res
       .status(400)
       .json({ message: "Too many params for this api call" });
-  }
-  if (req.method === "GET") {
-    let userName = req.query.params[0];
-    ret = await getMethod(req, res, userName);
   }
   return ret;
 }
 
-async function getMethod(req, res, userName) {
-  let client = await MongoClient.connect(url);
-  let db = client.db();
+// http://localhost:3000/api/user/[userName]
+// get method to check a user
 
-  let usersCollection = db.collection("users");
-  let users = await usersCollection.find({ name: userName }).toArray();
-  client.close();
-  if (users.length > 0) {
-    return res.status(200).json(users[0]);
-  } else {
-    return res.status(400).json({ message: "user is not exist" });
-  }
+async function getMethod(res, userName) {
+  await mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  User.findOne({ name: userName }).then((user) => {
+    if (user) {
+      return res.status(200).json(user);
+    } else {
+      return res.status(300).json({ msg: "user not exist" });
+    }
+  });
 }
-
-let url =
-  "mongodb+srv://pyloo:Salamander.123@cluster0.t25mg.mongodb.net/WordApp?retryWrites=true&w=majority";

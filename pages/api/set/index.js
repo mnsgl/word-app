@@ -1,4 +1,7 @@
 import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
+import Set from "../models/set";
+import User from "../models/user";
 
 export default async function handler(req, res) {
   let ret = null;
@@ -11,37 +14,46 @@ export default async function handler(req, res) {
   return ret;
 }
 
+// http://localhost:3000/api/set/
+// post method to create a empty set
+//  body {
+//      set : {
+//        setName,
+//      }
+//      user: {
+//        userName,
+//      }
+//  }
+
 async function postMethod(req, res) {
   if (!req?.body) {
     return res.status(400).json({ msg: "body is empty" });
   }
-  let client = await MongoClient.connect(url, {
+  let setInfo = req.body.set;
+  let userInfo = req.body.user;
+  await mongoose.connect(process.env.MONGODB_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   });
-  let db = client.db();
 
-  let setsCollection = db.collection("sets");
-  let usersCollection = db.collection("users");
-  let sets = await setsCollection.find().sort({ _id: -1 }).toArray();
-  let id = null;
-  if (sets.length > 0) {
-    id = sets[0]._id + 1;
-  } else {
-    id = 1;
-  }
   let set = {
-    _id: id,
-    setName: req.body.setName,
-    date: new Date().toLocaleString(),
+    _id: new mongoose.Types.ObjectId(),
+    timeStamp: Date.now(),
     words: [],
+    ...setInfo,
   };
-  setsCollection.insertOne(set).then((_) => {
-    usersCollection
-      .updateOne({ name: req.body.userName }, { $push: { setsId: id } })
-      .then((_) => client.close());
-  });
-  return res.status(201).json({ msg: "set created", id });
+  new Set(set)
+    .save()
+    .then(async (_) => {
+      await User.findOneAndUpdate(
+        { name: userInfo.userName },
+        { $push: { setIds: set._id } }
+      );
+      return res.status(201).json(set);
+    })
+    .catch((err) => {
+      return res.status(400).json({ error: err });
+    });
 }
 let url =
   "mongodb+srv://pyloo:Salamander.123@cluster0.t25mg.mongodb.net/WordApp?retryWrites=true&w=majority";

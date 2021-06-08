@@ -13,29 +13,27 @@ export default function Set() {
   const [add, setAdd] = useState(false);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [curSet, setCurSet] = useState({});
   const [theme] = useContext(ThemeContext);
 
   useEffect(async () => {
-    if (router.query.set_name) {
-      await fetch(
-        `/api/set/word/${sessionStorage.getItem("userName")}/${
-          router.query.set_name
-        }`
-      )
+    if (router.query.id) {
+      await fetch("/api/set/word/" + router.query.id)
         .then((res) => res.json())
         .then((data) => {
-          setData(data);
+          setData(data.words);
+          setCurSet(data);
           setLoading(false);
         });
     }
-  }, [router.query.set_name]);
+  }, [router.query.id]);
   if (typeof window !== "undefined" && !sessionStorage.getItem("userName")) {
     router.push("/user/signin");
   }
   return (
     <>
       <Head>
-        <title>Set-{router.query.set_name}</title>
+        <title>Set-{curSet?.setName}</title>
       </Head>
       <div
         className={`container h-screen w-full mx-auto box-content ${
@@ -78,7 +76,7 @@ export default function Set() {
                       theme === "dark" && "bg-dark text-gray-200"
                     }`}
                   >
-                    {router.query.set_name?.toUpperCase()}
+                    {curSet?.setName.toUpperCase()}
                   </p>
                 </div>
               </div>
@@ -88,7 +86,7 @@ export default function Set() {
                 }`}
               >
                 {data
-                  .sort((a, b) => a._id - b._id)
+                  //.sort((a, b) => a._id - b._id)
                   .map((item, index) => (
                     <div key={index} className="rounded-lg">
                       <WordItem data={item} setData={setData} />
@@ -122,23 +120,3 @@ export default function Set() {
     </>
   );
 }
-
-/*
-export async function getStaticPaths(context) {
-  const response = await fetch("/api/set/" + localStorage.getItem("userName"));
-  const res = await response.json();
-  const path = {};
-  if (response.status === 200) {
-    path = res.map((set) => ({
-      params: { set_name: `${set.setName}` },
-    }));
-  }
-  return { paths, fallback: false };
-}
-*/
-/*
-                      <MdDelete
-                        size="26px"
-                        className="rounded-md bg-transparent ml-8"
-                      />
-*/

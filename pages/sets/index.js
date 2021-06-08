@@ -14,7 +14,7 @@ function Sets() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sets, setSets] = useContext(SetsContext);
-  const [theme, setTheme] = useContext(ThemeContext);
+  const [theme] = useContext(ThemeContext);
   const [projectName, setProjectName] = useState("");
   const [err, setErr] = useState(false);
   const router = useRouter();
@@ -22,9 +22,13 @@ function Sets() {
   async function checkAndCreate(e) {
     let userName = sessionStorage.getItem("userName");
     let nameIsValid = sets.find((set) => set.setName === projectName);
-    const set = {
-      userName,
-      setName: projectName,
+    const emptySet = {
+      set: {
+        setName: projectName,
+      },
+      user: {
+        userName,
+      },
     };
     if (nameIsValid) {
       setErr(true);
@@ -36,13 +40,11 @@ function Sets() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(set),
+        body: JSON.stringify(emptySet),
       })
         .then((res) => res.json())
         .then((info) => {
-          set._id = info.id;
-          set.date = new Date().toLocaleString();
-          setSets((prev) => [...prev, set]);
+          setSets((prev) => [...prev, info]);
         });
     }
   }
@@ -56,17 +58,19 @@ function Sets() {
     if (typeof window !== "undefined" && !sessionStorage.getItem("userName")) {
       router.push("/user/signin");
     }
-    Modal.setAppElement("#__next");
     if (sets.length === 0) {
       fetch("/api/set/" + sessionStorage.getItem("userName"))
         .then((res) => res.json())
         .then((data) => {
-          setSets(data);
+          if (data.length !== 0) {
+            setSets(data);
+          }
           setLoading(false);
         });
     } else {
       setLoading(false);
     }
+    Modal.setAppElement("#__next");
   }, [sets]);
   return (
     <>

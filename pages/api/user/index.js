@@ -1,4 +1,6 @@
 import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
+import User from "../models/user";
 
 export default async function handler(req, res) {
   let ret = null;
@@ -11,35 +13,41 @@ export default async function handler(req, res) {
   return ret;
 }
 
+// http://localhost:3000/api/user
+// post method to create a user
+//  body {
+//     name,
+//     mail,
+//     pass,
+//  }
+
 async function postMethod(req, res) {
   if (!req?.body) {
     return res.status(400).json({ msg: "body is empty" });
   }
-  let client = await MongoClient.connect(url);
-  let db = client.db();
+  let userInfo = req.body;
+  await mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
-  let usersCollection = db.collection("users");
-  let isExist = await usersCollection.find({ name: req.body.name }).toArray();
-  if (isExist.length > 0) {
-    return res.status(203).json({ message: "user already exist" });
-  }
-  let users = await usersCollection.find().sort({ _id: -1 }).toArray();
-  let id = null;
-  if (users.length > 0) {
-    id = users[0]._id + 1;
-  } else {
-    id = 1;
-  }
-  let user = {
-    _id: id,
-    name: req.body.name,
-    pass: req.body.pass,
-    mail: req.body.mail,
-    date: new Date().toLocaleString(),
-    setsId: [],
-  };
-  usersCollection.insertOne(user).then((_) => client.close());
-  return res.status(201).json({ msg: "user created" });
+  User.find({
+    $or: [{ name: userInfo.name }, { mail: userInfo.mail }],
+  }).then((user) => {
+    if (user.length > 0) {
+      return res.status(203).json({ message: "user already exist" });
+    }
+    new User({
+      _id: new mongoose.Types.ObjectId(),
+      date: new Date().toLocaleString(),
+      ...userInfo,
+    })
+      .save()
+      .then((_) => {
+        return res.status(201).json({ msg: "user was created" });
+      })
+      .catch((err) => {
+        return res.status(400).json({ error: err });
+      });
+  });
 }
-let url =
-  "mongodb+srv://pyloo:Salamander.123@cluster0.t25mg.mongodb.net/WordApp?retryWrites=true&w=majority";
