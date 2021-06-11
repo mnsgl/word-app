@@ -72,7 +72,7 @@ export default function Set() {
                 </div>
                 <div>
                   <p
-                    className={`text-center text-4xl ${
+                    className={`text-center text-3xl ${
                       theme === "dark" && "bg-dark text-gray-200"
                     }`}
                   >
