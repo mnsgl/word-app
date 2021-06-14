@@ -25,6 +25,7 @@ module.exports = {
   },
   variants: {
     extend: {
+      height: ["hover"],
       fill: ["hover"],
       listStyleType: ["focus"],
     },

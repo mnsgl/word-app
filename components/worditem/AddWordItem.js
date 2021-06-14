@@ -10,6 +10,7 @@ export default function AddWordItem({ setAdd, data, setData }) {
   const [word, setWord] = useState("");
   const [pro, setPro] = useState("");
   const [tran, setTran] = useState("");
+  const [sent, setSent] = useState("");
   const [kind, setKind] = useState("");
   const [, setSets] = useContext(SetsContext);
   const [theme] = useContext(ThemeContext);
@@ -25,7 +26,7 @@ export default function AddWordItem({ setAdd, data, setData }) {
       tran,
       kind,
       timeStamp: Date.now(),
-      // sent,
+      sent,
       //fav,
     };
     fetch("/api/set/word/", {
@@ -47,12 +48,12 @@ export default function AddWordItem({ setAdd, data, setData }) {
 
   return (
     <div
-      className={`item w-full h-18 mb-2 rounded-lg cursor-pointer border-2 border-gray-300 shadow hover:shadow-lg transition ease-in-out duration-300 px-5 select-none ${
+      className={`item w-full h-28 overflow-hidden mb-2 rounded-lg cursor-pointer border-2 border-gray-300 shadow hover:shadow-lg transition ease-in-out duration-300 px-4 select-none ${
         theme === "dark" && "bg-dark hover:border-blue-600"
       }`}
     >
-      <div className="flex justify-between items-center h-full bg-transparent">
-        <div className="bg-transparent grid grid-cols-3 w-5/6">
+      <div className="flex justify-between items-start h-full bg-transparent">
+        <div className="bg-transparent grid grid-cols-3 w-5/6 mt-2">
           <EText type="word" theme={theme} text={word} setText={setWord} />
           <EText
             type="pronunciation"
@@ -61,21 +62,24 @@ export default function AddWordItem({ setAdd, data, setData }) {
             setText={setPro}
           />
           <EText type="translate" theme={theme} text={tran} setText={setTran} />
+          <EText type="sentence" theme={theme} text={sent} setText={setSent} />
         </div>
-        <div className="word-item-set flex gap-3 bg-transparent">
+        <div className="word-item-set h-full items-center justify-center flex gap-3 bg-transparent">
           <EText type="kind" theme={theme} text={kind} setText={setKind} kind />
-          <MdAdd
-            onClick={add}
-            id="word-item-set-add"
-            size="28px"
-            className="cursor-pointer bg-transparent"
-          />
-          <MdDelete
-            onClick={() => setAdd(false)}
-            id="word-item-set-del"
-            size="24px"
-            className="cursor-pointer bg-transparent"
-          />
+          <div className="flex gap-3 bg-transparent">
+            <MdAdd
+              onClick={add}
+              id="word-item-set-add"
+              size="28px"
+              className="cursor-pointer bg-transparent"
+            />
+            <MdDelete
+              onClick={() => setAdd(false)}
+              id="word-item-set-del"
+              size="24px"
+              className="cursor-pointer bg-transparent"
+            />
+          </div>
         </div>
       </div>
     </div>

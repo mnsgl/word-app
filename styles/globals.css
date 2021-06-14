@@ -83,10 +83,38 @@ a {
 
 .item {
   animation: 300ms item forwards;
+
 }
 .item:hover {
   animation: 300ms item-hover forwards;
+
 }
+.eaxpand-item {
+  animation: 300ms expand-item forwards;
+}
+.expand-item:hover {
+  animation: 300ms expand-item-hover forwards;
+}
+
+@keyframes expand-item-hover {
+  from {
+    height: 3.5rem;
+  }
+  to {
+    height: 7rem;
+  }
+}
+
+@keyframes expand-item {
+  from {
+    height: 7rem;
+  }
+  to {
+    height: 3.5rem;
+  }
+}
+
+
 
 @keyframes item-hover {
   to {

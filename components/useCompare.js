@@ -11,5 +11,8 @@ export function useCompare(obj1, obj2) {
   if (obj1.pro !== obj2.pro) {
     return false;
   }
+  if (obj1.sent !== obj2.sent) {
+    return false;
+  }
   return true;
 }

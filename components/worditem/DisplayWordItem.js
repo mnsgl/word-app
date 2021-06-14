@@ -28,34 +28,37 @@ export default function DisplayWordItem({ data, setEdit, setData }) {
   }
   return (
     <div
-      className={`item w-full h-18 mb-2 rounded-lg cursor-pointer border-2 border-gray-300 shadow hover:shadow-lg px-5 py-4 select-none ${
+      className={`item expand-item w-full h-14 mb-2 overflow-hidden rounded-lg cursor-pointer border-2 border-gray-300 shadow hover:shadow-lg px-4 pt-4 select-none ${
         theme === "dark" && "bg-dark hover:border-blue-800"
       }`}
     >
       <div
-        className={`flex justify-between items-center h-full ${
+        className={`flex justify-between items-start h-full ${
           theme === "dark" && "bg-dark text-gray-100"
         }`}
       >
-        <div className="grid grid-cols-3 w-5/6 bg-transparent justify-between ">
+        <div className="grid grid-cols-3 w-5/6 bg-transparent ">
           <DText text={data.word} theme={theme} />
           <DText text={data.pro} theme={theme} />
           <DText text={data.tran} theme={theme} />
+          <DText text={data?.sent} theme={theme} sent />
         </div>
-        <div className="word-item-display flex gap-3 bg-transparent">
+        <div className="word-item-display flex gap-3 bg-transparent -mt-1">
           <DText text={data?.kind} theme={theme} kind />
-          <MdEdit
-            onClick={(e) => setEdit((p) => !p)}
-            id="word-item-dis-edit"
-            size="25px"
-            className="cursor-pointer bg-transparent"
-          />
-          <MdDelete
-            onClick={delItem}
-            id="word-item-dis-del"
-            size="24px"
-            className="cursor-pointer bg-transparent"
-          />
+          <div className="flex gap-3 bg-transparent mt-1">
+            <MdEdit
+              onClick={(e) => setEdit((p) => !p)}
+              id="word-item-dis-edit"
+              size="25px"
+              className="cursor-pointer bg-transparent"
+            />
+            <MdDelete
+              onClick={delItem}
+              id="word-item-dis-del"
+              size="24px"
+              className="cursor-pointer bg-transparent"
+            />
+          </div>
         </div>
       </div>
     </div>
