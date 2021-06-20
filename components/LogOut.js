@@ -14,7 +14,7 @@ export default function LogOut() {
   return (
     <button
       onClick={logOut}
-      className="focus:outline-none px-3 py-2 border-2 text-lg border-yellow-500 text-yellow-500 absolute right-10 top-5 rounded-md"
+      className="focus:outline-none px-3 py-2 border-2 text-lg border-yellow-500 text-yellow-500 absolute right-10 top-5 rounded-md mobile:px-2 mobile:text-xs mobile:border"
     >
       Log out
     </button>

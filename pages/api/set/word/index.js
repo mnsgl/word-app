@@ -44,7 +44,7 @@ async function postMethod(req, res) {
   let wordInfo = req.body.newWord;
   wordInfo._id = mongoose.Types.ObjectId(wordInfo._id);
   let setInfo = req.body.set;
-  await mongoose.connect(process.env.MONGODB_URI, {
+  await mongoose.connect(process.env.MONGODB_URI_OFFLINE, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
@@ -79,7 +79,7 @@ async function deleteMethod(req, res) {
 
   let wordInfo = req.body.word;
   let setInfo = req.body.set;
-  await mongoose.connect(process.env.MONGODB_URI, {
+  await mongoose.connect(process.env.MONGODB_URI_OFFLINE, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
@@ -116,7 +116,7 @@ async function patchMethod(req, res) {
   }
   let wordInfo = req.body.newWord;
   wordInfo._id = mongoose.Types.ObjectId(wordInfo._id);
-  await mongoose.connect(process.env.MONGODB_URI, {
+  await mongoose.connect(process.env.MONGODB_URI_OFFLINE, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });

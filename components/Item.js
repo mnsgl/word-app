@@ -17,11 +17,11 @@ export default function Item({ item }) {
         theme === "dark" && "bg-dark"
       }`}
     >
-      <div className="grid grid-cols-3 items-center content-center h-full bg-transparent">
+      <div className="grid grid-cols-4 items-center content-center h-full bg-transparent">
         <Link href={"/sets/" + item._id}>
           <a>
             <p
-              className={`text-2xl ${
+              className={`text-2xl mobile:text-sm mobile:text-center mobile:break-words ${
                 theme === "dark" && "bg-dark text-yellow-50"
               }`}
             >
@@ -30,25 +30,33 @@ export default function Item({ item }) {
           </a>
         </Link>
 
-        <div className="flex flex-col delete bg-transparent">
+        <div className="flex justify-end delete bg-transparent mobile:justify-start">
           <MdDelete
             onClick={deleteSet}
-            size="26px"
-            className={`self-center rounded-md bg-transparent ml-8 fill-current text-${
+            className={`self-center h-7 w-7 mobile:w-5 mobile:h-5 rounded-md bg-transparent ml-8 fill-current text-${
               theme === "light" ? "gray-400" : "gray-400"
             } hover:text-${theme === "light" ? "black" : "white"}`}
           />
         </div>
+        <div className="bg-transparent flex justify-end mobile:justify-center">
+          <p
+            className={`bg-transparent text-lg hover:underline mobile:text-xs ${
+              theme === "dark" && "text-gray-100"
+            }`}
+          >
+            {item.created}
+          </p>
+        </div>
         <div className="flex flex-col bg-transparent">
           <span
-            className={`self-end text-lg text-font-bold mb-2 ${
+            className={`self-end text-lg text-font-bold mb-2 mobile:text-xs mobile:mb-4 ${
               theme === "dark" && "bg-dark text-yellow-50"
             }`}
           >
             {item?.words?.length && item.words.length} words
           </span>
           <span
-            className={`self-end text-base bg-transparent ${
+            className={`self-end text-base bg-transparent mobile:text-xs ${
               theme === "dark" && "text-yellow-50"
             }`}
           >

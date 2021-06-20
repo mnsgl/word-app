@@ -43,6 +43,7 @@ a {
   fill: black;
 }
 
+/*
 @media (max-width: 639px) {
   .delete svg {
     width: 23px;
@@ -60,6 +61,7 @@ a {
     width: unset;
   }
 }
+*/
 
 .word-item-set svg path {
   fill: rgba(0, 0, 0, 0.35);
@@ -87,10 +89,9 @@ a {
 }
 .item:hover {
   animation: 300ms item-hover forwards;
-
 }
-.eaxpand-item {
-  animation: 300ms expand-item forwards;
+.dark-item {
+  animation: 300ms item-dark forwards;
 }
 .expand-item:hover {
   animation: 300ms expand-item-hover forwards;
@@ -121,12 +122,25 @@ a {
     border-color: rgba(30, 64, 175, .6);
   }
 }
+@keyframes item-dark {
+  from {
+    border-color: rgba(30, 64, 175, .6);
+  }
+  to {
+    border-color: rgba(254, 254, 254, .3);
+  }
+}
 
 @keyframes item {
   from {
     border-color: rgba(30, 64, 175, .6);
   }
   to {
-    border-color: rgba(255, 251, 235, .6);
+    border-color: rgba(209, 213, 219, 1);
   }
 }
+
+/*
+    border-color: rgba(229, 231, 235, 1);
+    border-color: rgba(75, 85, 99, 1);
+*/

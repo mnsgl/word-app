@@ -19,19 +19,28 @@ export default async function handler(req, res) {
 //  body {
 //      set : {
 //        setName,
-//      }
-//      user: {
-//        userName,
+//        created,
+//        isPublic,
 //      }
 //  }
+
+async function patchMethod(req, res) {
+  if (!req?.body) {
+    return res.status(400).json({ msg: "body is empty" });
+  }
+  let setInfo = req.body.set;
+  await mongoose.connect(process.env.MONGODB_URI_OFFLINE, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  });
+}
 
 async function postMethod(req, res) {
   if (!req?.body) {
     return res.status(400).json({ msg: "body is empty" });
   }
   let setInfo = req.body.set;
-  let userInfo = req.body.user;
-  await mongoose.connect(process.env.MONGODB_URI, {
+  await mongoose.connect(process.env.MONGODB_URI_OFFLINE, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   });
@@ -46,7 +55,7 @@ async function postMethod(req, res) {
     .save()
     .then(async (_) => {
       await User.findOneAndUpdate(
-        { name: userInfo.userName },
+        { name: setInfo.created },
         { $push: { setIds: set._id } }
       );
       return res.status(201).json(set);
@@ -55,5 +64,3 @@ async function postMethod(req, res) {
       return res.status(400).json({ error: err });
     });
 }
-let url =
-  "mongodb+srv://pyloo:Salamander.123@cluster0.t25mg.mongodb.net/WordApp?retryWrites=true&w=majority";

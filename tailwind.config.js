@@ -1,4 +1,5 @@
 module.exports = {
+  mode: "jit",
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -9,6 +10,7 @@ module.exports = {
       spacing: {
         144: "36rem",
         18: "4.5rem",
+        100: "26rem",
       },
       boxShadow: {
         "3xl": "0 12px 75px -15px rgba(0, 0, 0, 0.25)",
@@ -20,6 +22,9 @@ module.exports = {
       colors: {
         dark: "#151515",
         darkWhite: "rgba(241, 241, 241, .2)",
+      },
+      screens: {
+        mobile: { max: "639px" },
       },
     },
   },

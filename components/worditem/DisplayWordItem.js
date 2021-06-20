@@ -28,8 +28,8 @@ export default function DisplayWordItem({ data, setEdit, setData }) {
   }
   return (
     <div
-      className={`item expand-item w-full h-14 mb-2 overflow-hidden rounded-lg cursor-pointer border-2 border-gray-300 shadow hover:shadow-lg px-4 pt-4 select-none ${
-        theme === "dark" && "bg-dark hover:border-blue-800"
+      className={`item expand-item w-full h-14 mb-2 overflow-hidden rounded-lg cursor-pointer border shadow hover:shadow-lg px-4 pt-4 select-none ${
+        theme === "dark" && "bg-dark hover:border-blue-800 dark-item"
       }`}
     >
       <div

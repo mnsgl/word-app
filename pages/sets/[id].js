@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import AddWordItem from "../../components/worditem/AddWordItem";
 import Loading from "../../components/Loading";
 import LogOut from "../../components/LogOut";
+import React from "react";
 import {
   makeStyles,
   FormHelperText,
@@ -114,9 +115,7 @@ export default function Set() {
                   })
                   .sort((a, b) => a.timeStamp - b.timeStamp)
                   .map((item, index) => (
-                    <div key={index} className="rounded-lg">
-                      <WordItem data={item} setData={setData} />
-                    </div>
+                    <WordItem key={index} data={item} setData={setData} />
                   ))}
                 {add && (
                   <div className="rounded-xl">

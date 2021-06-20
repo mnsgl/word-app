@@ -17,10 +17,9 @@ function Theme() {
   }, [theme]);
   return (
     <MdLightbulbOutline
-      size="35px"
       fill={`${theme === "dark" ? "white" : "black"}`}
       onClick={changeTheme}
-      className="absolute top-5 left-20 cursor-pointer bg-transparent select-none"
+      className="absolute h-9 w-9 mobile:h-6 mobile:w-6 mobile:top-7 top-5 left-20 cursor-pointer bg-transparent select-none"
     />
   );
 }
