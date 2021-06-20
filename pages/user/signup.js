@@ -70,7 +70,7 @@ export default function SignUp() {
             <Loading />
           ) : (
             <form
-              className={`flex flex-col justify-center w-96 h-144 pb-10 rounded-3xl shadow-3xl mobile:h-100 mobile:w-80 mobile:pb-3 ${
+              className={`flex flex-col justify-center w-96 h-144 pb-10 rounded-3xl shadow-3xl mobile:h-100 mobile:w-72 mobile:pb-3 ${
                 theme === "dark" && "bg-dark shadow-dark"
               }`}
             >

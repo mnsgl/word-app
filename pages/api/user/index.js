@@ -26,7 +26,7 @@ async function postMethod(req, res) {
     return res.status(400).json({ msg: "body is empty" });
   }
   let userInfo = req.body;
-  await mongoose.connect(process.env.MONGODB_URI_OFFLINE, {
+  await mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });

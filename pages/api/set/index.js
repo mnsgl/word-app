@@ -29,7 +29,7 @@ async function patchMethod(req, res) {
     return res.status(400).json({ msg: "body is empty" });
   }
   let setInfo = req.body.set;
-  await mongoose.connect(process.env.MONGODB_URI_OFFLINE, {
+  await mongoose.connect(process.env.MONGODB_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   });
@@ -40,7 +40,7 @@ async function postMethod(req, res) {
     return res.status(400).json({ msg: "body is empty" });
   }
   let setInfo = req.body.set;
-  await mongoose.connect(process.env.MONGODB_URI_OFFLINE, {
+  await mongoose.connect(process.env.MONGODB_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   });

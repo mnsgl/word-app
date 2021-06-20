@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 // get method to check a user
 
 async function getMethod(res, userName) {
-  await mongoose.connect(process.env.MONGODB_URI_OFFLINE, {
+  await mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });

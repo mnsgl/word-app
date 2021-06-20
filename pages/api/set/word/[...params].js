@@ -21,7 +21,7 @@ export default async function handler(req, res) {
 // get method to get all words of a set
 
 async function getMethod(res, setId) {
-  await mongoose.connect(process.env.MONGODB_URI_OFFLINE, {
+  await mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });

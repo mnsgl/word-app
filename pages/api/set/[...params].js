@@ -31,7 +31,7 @@ export default async function handler(req, res) {
 // get method to get set by user name
 
 async function getMethod(res, { userName }) {
-  await mongoose.connect(process.env.MONGODB_URI_OFFLINE, {
+  await mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
@@ -46,7 +46,7 @@ async function getMethod(res, { userName }) {
 // get method to get all sets except of user
 
 async function getMethodForAllSets(res, userName) {
-  await mongoose.connect(process.env.MONGODB_URI_OFFLINE, {
+  await mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
@@ -61,7 +61,7 @@ async function getMethodForAllSets(res, userName) {
 // delete method to delete a set by user name and set id
 
 async function deleteMethod(res, userName, setId) {
-  await mongoose.connect(process.env.MONGODB_URI_OFFLINE, {
+  await mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
