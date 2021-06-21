@@ -77,12 +77,12 @@ export default function EditWordItem({ data, setEdit, setData }) {
 
   return (
     <div
-      className={`item w-full h-28 overflow-hidden mb-2 rounded-md cursor-pointer border-2 border-gray-300 shadow hover:shadow-lg px-4 select-none ${
+      className={`item w-full h-28 overflow-hidden mb-2 rounded-md cursor-pointer border-2 border-gray-300 shadow hover:shadow-lg px-4 select-none mobile:h-72 ${
         theme === "dark" && "bg-dark hover:border-blue-600"
       }`}
     >
-      <div className="flex justify-between items-start h-full bg-transparent">
-        <div className="bg-transparent grid grid-cols-3 w-5/6 mt-2">
+      <div className="flex justify-between items-start h-full bg-transparent mobile:flex-col mobile:justify-evenly">
+        <div className="bg-transparent grid grid-cols-3 w-5/6 mt-2 mobile:grid-rows-4 mobile:grid-cols-1 mobile:w-full mobile:gap-2 mobile:mb-5 mobile:pr-3">
           <EText type="word" theme={theme} text={word} setText={setWord} />
           <EText
             type="pronunciation"
@@ -93,9 +93,9 @@ export default function EditWordItem({ data, setEdit, setData }) {
           <EText type="translate" theme={theme} text={tran} setText={setTran} />
           <EText type="sentence" theme={theme} text={sent} setText={setSent} />
         </div>
-        <div className="word-item-set h-full items-center justify-center flex gap-3 bg-transparent">
+        <div className="word-item-set h-full items-center justify-center flex gap-3 bg-transparent mobile:flex-col mobile:justify-center mobile:w-full">
           <EText type="kind" theme={theme} text={kind} setText={setKind} kind />
-          <div className="flex gap-3 bg-transparent">
+          <div className="flex gap-3 bg-transparent mobile:justify-center mobile:mr-5">
             <MdAdd
               onClick={edit}
               id="word-item-set-add"

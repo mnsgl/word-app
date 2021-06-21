@@ -140,7 +140,19 @@ a {
   }
 }
 
-/*
-    border-color: rgba(229, 231, 235, 1);
-    border-color: rgba(75, 85, 99, 1);
-*/
+@media (max-width: 639px) {
+.item {
+  animation: none;
+
+}
+.item:hover {
+  animation: none;
+}
+.dark-item {
+  animation: none;
+}
+.expand-item:hover {
+  animation: none;
+}
+  
+}

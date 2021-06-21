@@ -13,7 +13,7 @@ export default function Item({ item }) {
   }
   return (
     <div
-      className={`item w-full h-18 mb-2 rounded-lg cursor-pointer border-2 shadow hover:shadow-lg px-5 ${
+      className={`item w-full h-18 mb-2 rounded-lg cursor-pointer border-2 shadow hover:shadow-lg px-5 mobile:border ${
         theme === "dark" && "bg-dark"
       }`}
     >
@@ -60,7 +60,7 @@ export default function Item({ item }) {
               theme === "dark" && "text-yellow-50"
             }`}
           >
-            {new Date(item.timeStamp).toLocaleString().split(",")[0]}
+            {new Date(item.timeStamp).toLocaleDateString()}
           </span>
         </div>
       </div>
